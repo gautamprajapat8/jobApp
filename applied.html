@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database</title>
+    <link rel="stylesheet" href="commonStyles.css" />
+  </head>
+
+  <body>
+    <div id="links">
+      <div><a href="index.html">Home</a></div>
+      <div><a href="applied.html">Applied Jobs</a></div>
+      <div><a href="bookmark.html">Bookmarks</a></div>
+    </div>
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job applied</th>
+            <th>Salary expected</th>
+            <th>Add to bookmark</th>
+          </tr>
+        </thead>
+        <tbody id="body">
+          <!-- Append your output to tbody -->
+        </tbody>
+      </table>
+    </main>
+  </body>
+  <script>
+    //you need to code here
+    let jobListArr=JSON.parse(localStorage.getItem("jobList"));
+    let bookmarks= JSON.parse(localStorage.getItem("bookmarks")) || [];
+    displyItem(jobListArr);
+
+
+    function displyItem(jobListArr)
+    {
+      document.querySelector("tbody").innerHTML="";
+        jobListArr.forEach(function(elem)
+        {
+          let tr=document.createElement("tr");
+          let name=document.createElement("td");
+          name.innerText=elem.name;
+          let email=document.createElement("td");
+          email.innerText=elem.email;
+          let jobApplied=document.createElement("td");
+          jobApplied.innerText=elem.role;
+          let salary=document.createElement("td");
+          salary.innerText=elem.salary;
+          let bookmark=document.createElement("td");
+          bookmark.innerText="Bookmark";
+          bookmark.style.color="#8000FF";
+          bookmark.style.cursor="pointer";
+          bookmark.addEventListener("click", function()
+          {
+            addToBookmark(elem);
+          });
+
+          tr.append(name, email, jobApplied, salary, bookmark);
+          document.querySelector("#body").append(tr);
+        });
+    }
+    function addToBookmark(elem)
+    {
+      bookmarks.push(elem);
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    }
+
+  </script>
+</html>
